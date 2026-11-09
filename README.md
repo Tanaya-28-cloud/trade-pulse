@@ -8,7 +8,9 @@ Browser  <--HTTP + SSE-->  Dashboard server (Node)  --long-running GET-->  Mock 
 ```
 
 There are no npm dependencies. Everything runs on Node.js 20 or newer using only built-in modules, so setup is cloning the repo and running one command.
+
 Live link - https://trade-pulse-public.vercel.app/
+
 Video walkthrough - https://drive.google.com/file/d/1PAa6_OW2AbeVwX6Bdjlxsah6I8wrxEBe/view?usp=sharing/
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for the diagram and the reasoning behind the design.
