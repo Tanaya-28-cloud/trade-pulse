@@ -1,6 +1,10 @@
 (() => {
   'use strict';
 
+  const API_BASE_URL = 'https://trade-pulse-q7h6.onrender.com';
+
+  // Rest of your existing code...
+
   // Trade Pulse Preloader
   const preloader = document.getElementById('preloader');
 
@@ -169,8 +173,8 @@
   async function loadPage() {
     const seq = ++state.loadSeq;
     const qs = new URLSearchParams({ page: state.page, pageSize: state.pageSize, q: state.q });
-    try {
-      const res = await fetch(`/api/trades?${qs}`);
+    try {const res = await fetch(`${API_BASE_URL}/api/trades?${qs}`);
+      
       const data = await res.json();
       if (seq !== state.loadSeq) return; // a newer request superseded this one
       state.rows = data.trades;
@@ -226,7 +230,7 @@
 
   /* ---------- live stream (Server-Sent Events: no polling) ---------- */
   function connect() {
-    const es = new EventSource('/api/events');
+    const es = new EventSource(`${API_BASE_URL}/api/events`);
     es.onopen = () => {
       el.conn.dataset.state = 'live';
       el.connText.textContent = 'Live';
