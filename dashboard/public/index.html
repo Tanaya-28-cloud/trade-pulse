@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17191d">
+  <title>Trade Pulse | Market Operations</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+  <!-- Trade Pulse Preloader -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-content">
+
+      <div class="preloader-logo">
+        <span class="brand-mark" aria-hidden="true">
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+      </div>
+
+      <h2>TRADE PULSE</h2>
+      <p>MARKET OPERATIONS</p>
+
+      <div class="loader-track">
+        <div class="loader-progress"></div>
+      </div>
+
+    </div>
+  </div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="Trade Pulse home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span><strong>TRADE PULSE</strong><small>MARKET OPERATIONS</small></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#overview"><span class="nav-icon">▦</span>Overview</a>
+        <a class="nav-link" href="#trades"><span class="nav-icon">↗</span>Live Trades</a>
+        <a class="nav-link" href="#pipeline"><span class="nav-icon">⌘</span>Pipeline</a>
+        <a class="nav-link" href="#activity"><span class="nav-icon">≋</span>Activity</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="system-mini"><span class="mini-dot"></span>
+          <div><strong>System monitor</strong><small>Event-driven updates</small></div>
+        </div>
+        <div class="sidebar-foot">BSE MOCK ENVIRONMENT<br><span>TRADE PULSE · v1.0</span></div>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div>
+          <div class="breadcrumb">WORKSPACE <span>/</span> OVERVIEW</div>
+          <h1>Market overview</h1>
+          <p class="top-sub">Real-time trade ingestion and monitoring</p>
+        </div>
+        <div class="top-actions">
+          <div class="env-chip"><span></span> DEMO ENVIRONMENT</div>
+          <div class="conn" id="conn" data-state="connecting" role="status"><span class="dot"></span><span
+              id="connText">Connecting…</span></div>
+        </div>
+      </header>
+
+      <main id="overview">
+        <section class="kpis" aria-label="Market summary">
+          <article class="kpi">
+            <div class="kpi-top"><span class="eyebrow">TOTAL TRADES</span><span class="kpi-icon blue">↗</span></div>
+            <strong id="kTrades">–</strong><small class="kpi-foot"><span class="green-text">●</span> Persisted trade
+              records</small>
+          </article>
+          <article class="kpi">
+            <div class="kpi-top"><span class="eyebrow">TOTAL TURNOVER</span><span class="kpi-icon green">₹</span></div>
+            <strong id="kTurnover">–</strong><small class="kpi-foot">Aggregate traded value</small>
+          </article>
+          <article class="kpi">
+            <div class="kpi-top"><span class="eyebrow">ACTIVE CLIENTS</span><span class="kpi-icon blue">◎</span></div>
+            <strong id="kClients">–</strong><small class="kpi-foot">Unique trading clients</small>
+          </article>
+          <article class="kpi">
+            <div class="kpi-top"><span class="eyebrow">SYMBOLS TRACKED</span><span class="kpi-icon green">⌁</span></div>
+            <strong id="kSymbols">–</strong><small class="kpi-foot">Distinct market symbols</small>
+          </article>
+        </section>
+
+        <div class="dashboard-grid">
+          <div class="main-column">
+            <section class="panel pull-panel" id="pullCard" data-state="idle" aria-live="polite">
+              <div class="panel-heading">
+                <div><span class="eyebrow">INGESTION WORKER</span>
+                  <h2>Pull runs</h2>
+                </div><span class="live-tag"><i></i> LIVE MONITORING</span>
+              </div>
+              <div class="pull-content">
+                <div class="pull-copy">
+                  <div class="pull-state"><span class="state-orb"></span>
+                    <h3 id="pullLabel">Waiting for status…</h3>
+                  </div>
+                  <p id="pullSub" class="muted"></p>
+                </div>
+                <div class="timer-wrap"><span class="eyebrow">ELAPSED / TARGET</span>
+                  <div class="pull-clock" id="pullClock" aria-hidden="true">--:--</div>
+                </div>
+              </div>
+              <div class="bar" id="bar" aria-hidden="true"><i id="barFill"></i></div>
+              <div class="pull-foot"><span class="muted small" id="lastPull">No pull has completed yet.</span><span
+                  class="worker-label"><span class="mini-dot"></span> WORKER ACTIVE</span></div>
+            </section>
+
+            <section class="panel trades-panel" id="trades">
+              <div class="panel-heading trades-heading">
+                <div><span class="eyebrow">MARKET FEED</span>
+                  <h2>Recent trades</h2>
+                </div><span class="feed-badge"><i></i> STREAMING</span>
+              </div>
+              <div class="toolbar"><label class="search"><span class="search-icon">⌕</span><span class="sr-only">Search
+                    trades</span><input id="search" type="search" placeholder="Search trade ID, client or symbol"
+                    autocomplete="off"></label><span class="muted small" id="range"></span></div>
+              <div class="banner" id="banner" hidden><span id="bannerText"></span><button type="button"
+                  id="bannerBtn">Show latest</button></div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>TRADE ID</th>
+                      <th>CLIENT</th>
+                      <th>SYMBOL</th>
+                      <th class="num">QUANTITY</th>
+                      <th class="num">PRICE</th>
+                      <th class="num">VALUE</th>
+                      <th>TIME</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rows"></tbody>
+                </table>
+                <div class="empty" id="empty" hidden></div>
+              </div>
+              <div class="pager"><span class="muted small" id="pageInfo"></span>
+                <div class="pager-actions"><button type="button" id="prev">Previous</button><button type="button"
+                    id="next">Next</button></div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="right-column">
+            <section class="panel pipeline-panel" id="pipeline">
+              <div class="panel-heading">
+                <div><span class="eyebrow">DATA FLOW</span>
+                  <h2>Pipeline health</h2>
+                </div><span class="panel-menu">•••</span>
+              </div>
+              <div class="pipeline-flow">
+                <div class="pipe-step"><span class="pipe-icon blue">⇄</span>
+                  <div><strong>Mock BSE API</strong><small>Trade source</small></div><span class="step-check">✓</span>
+                </div>
+                <div class="pipe-connector"><i></i></div>
+                <div class="pipe-step"><span class="pipe-icon green">↻</span>
+                  <div><strong>Pull worker</strong><small>Incremental ingestion</small></div><span
+                    class="step-check">✓</span>
+                </div>
+                <div class="pipe-connector"><i></i></div>
+                <div class="pipe-step"><span class="pipe-icon blue">▤</span>
+                  <div><strong>Trade store</strong><small>Persistent snapshot</small></div><span
+                    class="step-check">✓</span>
+                </div>
+                <div class="pipe-connector"><i></i></div>
+                <div class="pipe-step"><span class="pipe-icon green">⌁</span>
+                  <div><strong>Dashboard</strong><small>Server-Sent Events</small></div><span
+                    class="step-check">✓</span>
+                </div>
+              </div>
+              <div class="pipeline-note"><span class="mini-dot"></span> Push-based updates · No browser polling</div>
+            </section>
+
+            <section class="panel channel-panel" id="activity">
+              <div class="panel-heading">
+                <div><span class="eyebrow">REAL-TIME CHANNEL</span>
+                  <h2>Event stream</h2>
+                </div><span class="channel-icon">⌁</span>
+              </div>
+              <div class="channel-row"><span class="channel-label">Transport</span><strong>Server-Sent Events</strong>
+              </div>
+              <div class="channel-row"><span class="channel-label">Endpoint</span><code>/api/events</code></div>
+              <div class="channel-row"><span class="channel-label">Connection</span><strong class="channel-live"><i></i>
+                  Persistent</strong></div>
+              <div class="channel-divider"></div>
+              <div class="event-types"><span>EVENT TYPES</span>
+                <div><b class="event-blue"></b> status</div>
+                <div><b class="event-green"></b> trades</div>
+              </div>
+            </section>
+
+            <section class="panel info-panel">
+              <div class="info-symbol">i</div>
+              <div><strong>Designed for long-running pulls</strong>
+                <p>The dashboard remains available while the worker fetches data. Completed batches are pushed to every
+                  connected browser.</p>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </main>
+      <footer class="footer"><span>TRADE PULSE <b>·</b> MARKET DATA MONITOR</span><span>BUILT FOR RESILIENT
+          INGESTION</span></footer>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script src="/app.js"></script>
+</body>
+
+</html>

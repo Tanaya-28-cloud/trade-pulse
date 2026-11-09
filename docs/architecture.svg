@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 420" width="980" height="420" font-family="-apple-system, 'Segoe UI', Inter, Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#475467"/>
+    </marker>
+    <marker id="arrowAccent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#0f766e"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="420" fill="#ffffff"/>
+  <text x="30" y="34" font-size="17" font-weight="700" fill="#121821">Trade Pulse: how a slow pull becomes a live dashboard</text>
+
+  <!-- Browser -->
+  <rect x="30" y="90" width="200" height="150" rx="12" fill="#f5f6f8" stroke="#d0d5dd"/>
+  <text x="130" y="116" font-size="14" font-weight="700" fill="#121821" text-anchor="middle">Browser</text>
+  <text x="130" y="140" font-size="12" fill="#475467" text-anchor="middle">Dashboard UI</text>
+  <text x="130" y="162" font-size="12" fill="#475467" text-anchor="middle">loads rows once,</text>
+  <text x="130" y="178" font-size="12" fill="#475467" text-anchor="middle">then just listens</text>
+  <text x="130" y="206" font-size="12" fill="#475467" text-anchor="middle">no polling</text>
+
+  <!-- Dashboard server container -->
+  <rect x="290" y="56" width="410" height="318" rx="14" fill="#f7fffd" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="310" y="78" font-size="13" font-weight="700" fill="#0f766e">Dashboard server (Node)</text>
+
+  <rect x="310" y="90" width="370" height="52" rx="10" fill="#ffffff" stroke="#d0d5dd"/>
+  <text x="325" y="112" font-size="13" font-weight="700" fill="#121821">SSE hub</text>
+  <text x="325" y="130" font-size="12" fill="#475467">/api/events: pushes 'status' and 'trades' to every open tab</text>
+
+  <rect x="310" y="160" width="370" height="52" rx="10" fill="#ffffff" stroke="#d0d5dd"/>
+  <text x="325" y="182" font-size="13" font-weight="700" fill="#121821">HTTP API + static files</text>
+  <text x="325" y="200" font-size="12" fill="#475467">/api/trades, /api/status: read the store, never wait on a pull</text>
+
+  <rect x="310" y="230" width="370" height="52" rx="10" fill="#ffffff" stroke="#d0d5dd"/>
+  <text x="325" y="252" font-size="13" font-weight="700" fill="#121821">Trade store</text>
+  <text x="325" y="270" font-size="12" fill="#475467">in memory, snapshotted to JSON, insert-or-ignore by tradeId</text>
+
+  <rect x="310" y="300" width="370" height="52" rx="10" fill="#ffffff" stroke="#d0d5dd"/>
+  <text x="325" y="322" font-size="13" font-weight="700" fill="#121821">Puller</text>
+  <text x="325" y="340" font-size="12" fill="#475467">one long request at a time; the next starts when it completes</text>
+
+  <!-- Mock BSE -->
+  <rect x="770" y="280" width="180" height="92" rx="12" fill="#f5f6f8" stroke="#d0d5dd"/>
+  <text x="860" y="306" font-size="14" font-weight="700" fill="#121821" text-anchor="middle">Mock BSE API</text>
+  <text x="860" y="328" font-size="12" fill="#475467" text-anchor="middle">GET /getTrades</text>
+  <text x="860" y="344" font-size="12" fill="#475467" text-anchor="middle">seeded data</text>
+  <text x="860" y="360" font-size="12" fill="#475467" text-anchor="middle">answers after ~15 min</text>
+
+  <!-- Arrows: browser -> http api (initial load) -->
+  <path d="M230 186 L310 186" stroke="#475467" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <text x="270" y="177" font-size="11" fill="#475467" text-anchor="middle">1 open page</text>
+
+  <!-- hub -> browser (push) -->
+  <path d="M310 116 L230 116" stroke="#0f766e" stroke-width="2" fill="none" marker-end="url(#arrowAccent)"/>
+  <text x="270" y="107" font-size="11" font-weight="700" fill="#0f766e" text-anchor="middle">3 push</text>
+
+  <!-- API reads store -->
+  <path d="M495 230 L495 212" stroke="#475467" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <text x="505" y="224" font-size="11" fill="#475467">reads</text>
+
+  <!-- puller writes store -->
+  <path d="M495 300 L495 282" stroke="#475467" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <text x="505" y="294" font-size="11" fill="#475467">2 insert new trades</text>
+
+  <!-- puller emits to hub (dashed, along right padding) -->
+  <path d="M680 326 L692 326 L692 116 L680 116" stroke="#0f766e" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#arrowAccent)"/>
+  <text x="712" y="212" font-size="11" fill="#0f766e" text-anchor="middle" transform="rotate(90 712 212)">emit 'trades'</text>
+
+  <!-- puller -> BSE -->
+  <path d="M700 326 L770 326" stroke="#475467" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <text x="735" y="342" font-size="11" fill="#475467" text-anchor="middle">GET + cursor</text>
+
+  <!-- footer legend -->
+  <text x="30" y="404" font-size="12" fill="#475467">Slow side (the pull) and fast side (the page) meet only at the store; a completed pull is the single event that crosses over.</text>
+</svg>

@@ -1,0 +1,5 @@
+node_modules/
+.DS_Store
+dashboard/data/
+mock-bse/state.json
+*.tmp

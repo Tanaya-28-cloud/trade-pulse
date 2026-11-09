@@ -1,0 +1,17 @@
+{
+  "name": "trade-pulse",
+  "version": "1.0.0",
+  "description": "Mock BSE trades API plus a live trades dashboard that updates the moment a slow pull completes.",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "mock": "node mock-bse/server.js",
+    "dashboard": "node dashboard/server.js",
+    "demo": "node scripts/demo.js",
+    "start": "node scripts/demo.js --real-delay",
+    "test": "node --test test/e2e.test.js"
+  }
+}
